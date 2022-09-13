@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/boot")
-public class BootStartController {
+public class BootStartTestController {
 
     @GetMapping("/start")
     public String bootStart(){
