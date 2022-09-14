@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- *
+ * 配置Druid监控
  * druid监控页面 项目地址 + /druid/login.html
  * http://localhost:1001/druid/login.html
  * @Author
@@ -24,11 +24,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DruidConfig {
 
-    @ConfigurationProperties(prefix = "spring.datasource")
-    @Bean
-    public DataSource druidDataSource(){
-        return new DruidDataSource();
-    }
+//    @Bean
+//    @ConfigurationProperties(prefix = "spring.datasource")
+//    public DataSource druidDataSource(){
+//        return new DruidDataSource();
+//    }
 
     @Bean
     public ServletRegistrationBean druidServletRegistrationBean(){
