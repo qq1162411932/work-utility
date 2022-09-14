@@ -129,6 +129,17 @@ public class DataApplicationTest {
     @Autowired
     SqlSession session;
 
+    /**
+     * SqlSession
+     * 正如之前所提到的，SqlSession 在 MyBatis 中是非常强大的一个类。它包含了所有执行语句、提交或回滚事务以及获取映射器实例的方法。
+     *
+     * SqlSession 类的方法超过了 20 个，为了方便理解，我们将它们分成几种组别。
+     *
+     * 语句执行方法
+     * 这些方法被用来执行定义在 SQL 映射 XML 文件中的 SELECT、INSERT、UPDATE 和 DELETE 语句。
+     * 你可以通过名字快速了解它们的作用，每一方法都接受语句的 ID 以及参数对象，参数可以是原始类型（支持自动装箱或包装类）、JavaBean、POJO 或 Map。
+     * 游标（Cursor）与列表（List）返回的结果相同，不同的是，游标借助迭代器实现了数据的惰性加载。
+     */
 
     @Test
     public void sqlSessionFactory() {

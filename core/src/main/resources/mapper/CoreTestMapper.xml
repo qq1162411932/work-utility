@@ -29,6 +29,64 @@
     </resultMap>
 
     <select id="getById" resultType="core.entity.CoreTest">
-        select * from core_test where id = #{id}
+        select *
+        from core_test
+        where id = #{id}
+    </select>
+
+    <!-- if标签在where标签下第一个 可以加id 会默认去掉，如果没在会报错 -->
+    <select id="getAllByNameAndValue" resultType="core.entity.CoreTest">
+        select
+        *
+        from
+        core_test
+        <where>
+            <if test="name != null and name != ''">
+                and name like concat('%', #{name}, '%')
+            </if>
+            <if test="value != null">
+                and value like concat('%', #{value}, '%')
+            </if>
+
+            <!--            <if test="exit == '1'.toString()" >-->
+            <!--                and end_status = 1-->
+            <!--            </if>-->
+        </where>
+    </select>
+
+    <!--不可以重载-->
+    <select id="getAllByEntity" resultType="core.entity.CoreTest">
+        select
+        *
+        from
+        core_test
+        <where>
+            <if test="entity.name != null and entity.name != ''">
+                and name like concat('%', #{entity.name}, '%')
+            </if>
+            <if test="entity.value != null">
+                and value like concat('%', #{entity.value}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getChooseAll" resultType="core.entity.CoreTest">
+        select
+        *
+        from
+        core_test
+        <where>
+            <choose>
+                <when test="entity.name != null">
+                    and id = 1
+                </when>
+                <when test="entity.value != null">
+                    and id = 2
+                </when>
+                <otherwise>
+                    and id = 3
+                </otherwise>
+            </choose>
+        </where>
     </select>
 </mapper>
