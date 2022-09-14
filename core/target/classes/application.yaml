@@ -51,7 +51,7 @@ spring:
           connection-close-after-log-enabled: true
           connection-connect-after-log-enabled: false
           connection-connect-before-log-enabled: false
-          
+
       # 合并多个DruidDataSource的监控数据
       useGlobalDataSourceStat: true
       # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
