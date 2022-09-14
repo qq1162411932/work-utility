@@ -27,4 +27,8 @@
         <result property="name" column="name"/>
         <result property="value" column="value"/>
     </resultMap>
+
+    <select id="getById" resultType="core.entity.CoreTest">
+        select * from core_test where id = #{id}
+    </select>
 </mapper>
