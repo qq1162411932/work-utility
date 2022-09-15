@@ -1,22 +1,17 @@
 package core.config;
 
 import javax.servlet.Servlet;
-import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 
 /**
  * 配置Druid监控
@@ -24,13 +19,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * http://localhost:1001/druid/login.html
  * @Author
  */
-@Configuration
-//@ConditionalOnBean(DataSource.class)
-//@AutoConfigureAfter(DataSourceAutoConfiguration.class)
-@EnableConfigurationProperties(CoreMybatisProperties.class)
-public class DruidConfig implements WebMvcConfigurer {
 
-//    @Bean
+@Configuration
+public class DruidConfig  {
+
+//    @Bean  开启start后不用配置 可以在yal中配置
 //    @ConfigurationProperties(prefix = "spring.datasource")
 //    public DataSource druidDataSource(){
 //        return new DruidDataSource();
@@ -69,19 +62,4 @@ public class DruidConfig implements WebMvcConfigurer {
         bean.setUrlPatterns(Arrays.asList("/*"));
         return bean;
     }
-
-    /**
-     * SQL 日志格式化
-     * @return DruidSqlLogFilter
-     */
-    @Bean
-    public DruidSqlLogFilter sqlLogFilter(CoreMybatisProperties properties) {
-        return new DruidSqlLogFilter(properties);
-    }
-
-    /**
-     * MybatisPlus 自动填充配置
-     *
-     * @author L.cm
-     */
 }

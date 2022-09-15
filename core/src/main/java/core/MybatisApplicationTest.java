@@ -21,8 +21,9 @@ public class MybatisApplicationTest {
     public void likeTagTest() {
         coreTestMapper.getAllByNameAndValue("a", "a");
         CoreTest coreTest = new CoreTest();
-        coreTest.setName("a");
-        coreTest.setValue("a");
+        coreTest.setName("bb");
+        coreTestMapper.selectList(null);
+        coreTest.setName("cccc");
         coreTestMapper.getAllByEntity(coreTest);
     }
 
