@@ -89,4 +89,19 @@
             </choose>
         </where>
     </select>
+
+    <select id="getAllPage" resultType="core.entity.CoreTest">
+        select
+        *
+        from
+        core_test
+        <where>
+            <if test="entity.name != null and entity.name != ''">
+                and name like concat('%', #{entity.name}, '%')
+            </if>
+            <if test="entity.value != null">
+                and value like concat('%', #{entity.value}, '%')
+            </if>
+        </where>
+    </select>
 </mapper>

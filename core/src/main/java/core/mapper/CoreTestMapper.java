@@ -2,6 +2,7 @@ package core.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import core.entity.CoreTest;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -33,6 +34,8 @@ public interface CoreTestMapper extends BaseMapper<CoreTest> {
      * choose、when、otherwise标签 类似于switch-case
      */
     List<CoreTest> getChooseAll(@Param(value = "entity") CoreTest coreTest);
+
+    Page<CoreTest> getAllPage(Page page, @Param(value = "entity") CoreTest coreTest);
 
     /**
      * trim、where、set
