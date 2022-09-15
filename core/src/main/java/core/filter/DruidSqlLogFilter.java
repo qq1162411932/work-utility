@@ -1,4 +1,4 @@
-package core.config;
+package core.filter;
 
 import com.alibaba.druid.DbType;
 import com.alibaba.druid.filter.FilterChain;
@@ -8,6 +8,7 @@ import com.alibaba.druid.proxy.jdbc.ResultSetProxy;
 import com.alibaba.druid.proxy.jdbc.StatementProxy;
 import com.alibaba.druid.sql.SQLUtils;
 import com.alibaba.druid.util.StringUtils;
+import core.config.CoreMybatisProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -92,7 +93,8 @@ public class DruidSqlLogFilter extends FilterEventAdapter {
         printSql(formattedSql, statement);
     }
 
-    @Override
+    ///捕获不到
+//    @Override
     public void statement_close(FilterChain chain, StatementProxy statement) throws SQLException {
         // 先调用父类关闭 statement
         super.statement_close(chain, statement);

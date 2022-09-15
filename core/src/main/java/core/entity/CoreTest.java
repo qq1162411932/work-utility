@@ -6,11 +6,13 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @Data
-@TableName(value = "core_test", autoResultMap = true)
+@TableName(value = "core_test")
 public class CoreTest {
 
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
+
     private String name;
+
     private String value;
 }
