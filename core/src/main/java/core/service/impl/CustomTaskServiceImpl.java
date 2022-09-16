@@ -3,12 +3,11 @@ package core.service.impl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import core.entity.CustomTask;
-import core.entity.dto.CustomTaskDTO;
 import core.entity.emuns.CustomTaskHandleMark;
 import core.entity.vo.CommonCountVo;
 import core.mapper.CustomTaskMapper;
 import core.service.CustomTaskService;
-import core.utils.TimeUtil;
+import core.utils.LocalDateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,11 +38,11 @@ public class CustomTaskServiceImpl extends ServiceImpl<CustomTaskMapper, CustomT
         CommonCountVoList.add(new CommonCountVo("任务总数", count));
         count = customTasks.stream().filter(customTask -> userName.equals(customTask.getPublisher()) && CustomTaskHandleMark.PASS.getKey().equals(customTask.getHandleMark())).count();
         CommonCountVoList.add(new CommonCountVo("我完成任务总数", count));
-        count = customTasks.stream().filter(customTask -> TimeUtil.isThisWeek(customTask.getPublishTime())).count();
+        count = customTasks.stream().filter(customTask -> LocalDateTimeUtil.isThisWeek(customTask.getPublishTime())).count();
         CommonCountVoList.add(new CommonCountVo("本周任务总数", count));
         count = customTasks.stream().filter(customTask ->
                 userName.equals(customTask.getPublisher()) && CustomTaskHandleMark.PASS.getKey().equals(customTask.getHandleMark())
-                        && TimeUtil.isThisWeek(customTask.getPublishTime())).count();
+                        && LocalDateTimeUtil.isThisWeek(customTask.getPublishTime())).count();
         CommonCountVoList.add(new CommonCountVo("本周完成任务总数", count));
         return null;
     }

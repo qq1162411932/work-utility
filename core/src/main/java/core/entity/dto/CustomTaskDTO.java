@@ -11,7 +11,10 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+/// lombok 使用报错
+//@AllArgsConstructor
+//https://blog.csdn.net/weixin_44329964/article/details/126368688
+//java: 已在类 core.entity.dto.CustomTaskDTO中定义了构造器 CustomTaskDTO()
 public class CustomTaskDTO {
 
 }
