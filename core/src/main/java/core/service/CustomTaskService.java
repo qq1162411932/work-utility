@@ -5,6 +5,8 @@ import core.entity.CustomTask;
 import core.entity.dto.CustomTaskDTO;
 import core.entity.vo.CommonCountVo;
 
+import java.util.List;
+
 /**
  * @Author: 栗真的很棒
  * @Date: 2022/9/15 16:07
@@ -12,5 +14,5 @@ import core.entity.vo.CommonCountVo;
 
 public interface CustomTaskService extends IService<CustomTask> {
 
-    CommonCountVo getTaskAllCount(String userName);
+    List<CommonCountVo> getTaskAllCount(Long userName);
 }

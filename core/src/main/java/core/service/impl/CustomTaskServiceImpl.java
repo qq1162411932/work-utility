@@ -25,8 +25,14 @@ public class CustomTaskServiceImpl extends ServiceImpl<CustomTaskMapper, CustomT
     @Autowired
     private CustomTaskMapper customTaskMapper;
 
+
+    /**
+     * 关于
+     * @param userName
+     * @return
+     */
     @Override
-    public CommonCountVo getTaskAllCount(String userName) {
+    public List<CommonCountVo> getTaskAllCount(Long userName) {
         Long count;
         List<CommonCountVo> CommonCountVoList = new ArrayList<>();
         List<CustomTask> customTasks = customTaskMapper.selectList(Wrappers.lambdaQuery(CustomTask.class)
@@ -34,16 +40,24 @@ public class CustomTaskServiceImpl extends ServiceImpl<CustomTaskMapper, CustomT
                 .or()
                 .eq(CustomTask::getPublisher, userName));
 
+        //mine to do
         count = customTasks.stream().filter(customTask -> userName.equals(customTask.getReceiver())).count();
         CommonCountVoList.add(new CommonCountVo("任务总数", count));
-        count = customTasks.stream().filter(customTask -> userName.equals(customTask.getPublisher()) && CustomTaskHandleMark.PASS.getKey().equals(customTask.getHandleMark())).count();
-        CommonCountVoList.add(new CommonCountVo("我完成任务总数", count));
-        count = customTasks.stream().filter(customTask -> LocalDateTimeUtil.isThisWeek(customTask.getPublishTime())).count();
+        count = customTasks.stream().filter(customTask -> userName.equals(customTask.getReceiver()) && CustomTaskHandleMark.PASS.getKey().equals(customTask.getHandleMark())).count();
+        CommonCountVoList.add(new CommonCountVo("完成任务总数", count));
+        count = customTasks.stream().filter(customTask -> userName.equals(customTask.getReceiver()) && customTask.getPublishTime() != null && LocalDateTimeUtil.isThisWeek(customTask.getPublishTime())).count();
         CommonCountVoList.add(new CommonCountVo("本周任务总数", count));
-        count = customTasks.stream().filter(customTask ->
-                userName.equals(customTask.getPublisher()) && CustomTaskHandleMark.PASS.getKey().equals(customTask.getHandleMark())
-                        && LocalDateTimeUtil.isThisWeek(customTask.getPublishTime())).count();
+        count = customTasks.stream().filter(customTask -> (userName.equals(customTask.getReceiver())
+                && customTask.getPublishTime() != null && LocalDateTimeUtil.isThisWeek(customTask.getPublishTime())
+                && CustomTaskHandleMark.PASS.getKey().equals(customTask.getHandleMark()))).count();
         CommonCountVoList.add(new CommonCountVo("本周完成任务总数", count));
-        return null;
+
+        //others to do
+        count = customTasks.stream().filter(customTask -> userName.equals(customTask.getPublisher())).count();
+        CommonCountVoList.add(new CommonCountVo("发布总任务", count));
+        count = customTasks.stream().filter(customTask -> userName.equals(customTask.getPublisher()) && CustomTaskHandleMark.PASS.getKey().equals(customTask.getHandleMark())).count();
+        CommonCountVoList.add(new CommonCountVo("发布已完成任务", count));
+
+        return CommonCountVoList;
     }
 }

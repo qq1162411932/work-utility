@@ -1,11 +1,14 @@
 package core.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import core.entity.CustomTask;
 import core.entity.dto.CustomTaskDTO;
 import core.entity.vo.CommonCountVo;
 import core.service.CustomTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @Author: 栗真的很棒
@@ -38,8 +41,7 @@ public class CustomTaskController {
      * @return
      */
     @GetMapping("/task/counts")
-    public CommonCountVo getNumByMonth(@RequestParam(name = "userName") String userName) {
+    public List<CommonCountVo> getNumByMonth(@RequestParam(name = "userName") Long userName) {
         return customTaskService.getTaskAllCount(userName);
     }
-
 }

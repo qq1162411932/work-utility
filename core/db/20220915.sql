@@ -11,3 +11,6 @@ CREATE TABLE `custom_task` (
        `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '0',
        PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='任务管理';
+
+ALTER TABLE `test`.`custom_task`
+    MODIFY COLUMN `handle_mark` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '处理情况 0 已发布，1已处理' AFTER `publish_time`
