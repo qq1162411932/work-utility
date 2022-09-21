@@ -5,16 +5,15 @@ import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import core.test.entity.Album;
-import core.test.entity.ThingsBoardUserAuth;
+import core.test.entity.LocationPost;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,5 +69,23 @@ public class ThingsboardTest {
         System.out.println(HttpStatus.OK);
 //        Assertions.assertEquals("1", "2");
         Assertions.assertNotNull("1");
+    }
+
+    @Test
+    public void testLocation(){
+        String url = "https://jsonplaceholder.typicode.com/posts";
+
+        Map<String, String> map = new HashMap<>();
+        map.put("u","hug me");
+        map.put("token", "token: Bear");
+        // body key:value map或者对象
+        HttpEntity<Map> httpEntity = new HttpEntity(map);
+
+        //1 请求路径 2 HttpEntity 3 返回类型pojo
+        LocationPost locationPost = restTemplate.postForObject(url, httpEntity, LocationPost.class);
+
+        //postForLocation 返回加上参数后的URL
+        URI locationPostURI = restTemplate.postForLocation(url, httpEntity);
+        Assertions.assertNotNull(locationPost);
     }
 }
