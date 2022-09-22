@@ -8,14 +8,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import core.test.entity.LocationPost;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @Author: 栗真的很棒
@@ -80,12 +82,65 @@ public class ThingsboardTest {
         map.put("token", "token: Bear");
         // body key:value map或者对象
         HttpEntity<Map> httpEntity = new HttpEntity(map);
+//        HttpHeaders headers = new HttpHeaders();
+
 
         //1 请求路径 2 HttpEntity 3 返回类型pojo
         LocationPost locationPost = restTemplate.postForObject(url, httpEntity, LocationPost.class);
 
         //postForLocation 返回加上参数后的URL
         URI locationPostURI = restTemplate.postForLocation(url, httpEntity);
+
+        // responseEntity 继承了HttpEntity类 属性多了status
+//        ResponseEntity<Object> response = restTemplate.postForEntity();
         Assertions.assertNotNull(locationPost);
     }
+
+    /**
+     * MultiValueMap 一个key对应多个value
+     * set 添加一个值的， add 添加对应多个值
+     */
+    //
+    @Test
+    public void testMultiValueMap(){
+        MultiValueMap<String, String>  linkedMultiValueMap = new LinkedMultiValueMap<>();
+        linkedMultiValueMap.add("name", "test1");
+        linkedMultiValueMap.add("name", "test2");
+        System.out.println(linkedMultiValueMap);
+    }
+
+    /**
+     * optionForAllow
+     */
+    @Test
+    public void testOptionForAllow(){
+        String url = "https://jsonplaceholder.typicode.com/posts";
+        Map<String, String> map = new HashMap<>();
+        map.put("u","hug me");
+        map.put("token", "token: Bear");
+
+        Set<HttpMethod> optionsForAllow = restTemplate.optionsForAllow("url", map);
+        HttpMethod[] supportedMethods
+                = {HttpMethod.GET, HttpMethod.POST, HttpMethod.PUT, HttpMethod.DELETE};
+        Assertions.assertTrue(optionsForAllow.containsAll(Arrays.asList(supportedMethods)));
+    }
+
+
+    /**
+     * 手机号验证
+     */
+    //验证是否为 手机号(手机)
+    boolean yanZh_dianH_shouJ(String s_ds){
+        if(s_ds.matches("^[1][3,4,5,7,8,9][0-9]{9}$")){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Test
+    public void testVerifyPhone(){
+        yanZh_dianH_shouJ("1234");
+    }
+
 }
