@@ -1,11 +1,13 @@
 package core.test;
 
-
 import com.alibaba.fastjson.JSON;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.test.entity.LocationPost;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.*;
@@ -32,7 +34,6 @@ public class ThingsboardTest {
     private RestTemplate restTemplate = new RestTemplate();
 
     String authUrl = baseUrl + "/api/auth/login";
-
 
     @Test
     public void getAuth() throws JsonProcessingException {
@@ -65,7 +66,6 @@ public class ThingsboardTest {
         String res = restTemplate.getForObject(url, String.class);
     }
 
-
     @Test
     public void testAsset() {
         System.out.println(HttpStatus.OK);
@@ -83,7 +83,6 @@ public class ThingsboardTest {
         // body key:value map或者对象
         HttpEntity<Map> httpEntity = new HttpEntity(map);
 //        HttpHeaders headers = new HttpHeaders();
-
 
         //1 请求路径 2 HttpEntity 3 返回类型pojo
         LocationPost locationPost = restTemplate.postForObject(url, httpEntity, LocationPost.class);
@@ -125,7 +124,6 @@ public class ThingsboardTest {
         Assertions.assertTrue(optionsForAllow.containsAll(Arrays.asList(supportedMethods)));
     }
 
-
     /**
      * 手机号验证
      */
@@ -139,8 +137,24 @@ public class ThingsboardTest {
     }
 
     @Test
-    public void testVerifyPhone(){
+    public void testVerifyPhone() throws JSONException {
         yanZh_dianH_shouJ("1234");
+        JSONObject json = new JSONObject();
+        Object test = json.get("test");
     }
 
+    @Test
+    public void testJSONObjectOrg(){
+        Map<String, String> map = new HashMap<>();
+        map.put("username", name);
+        map.put("password", pas);
+        //uri变量 路径参数
+        String userJson = JSON.toJSONString(map);
+
+//       HttpHeaders headers = new HttpHeaders();
+        HttpEntity userEntity = new HttpEntity(userJson);
+//        ResponseEntity<ThingsBoardUserAuth> thingsBoardUserAuthResponseEntity = restTemplate.postForEntity(authUrl, userEntity, ThingsBoardUserAuth.class);
+        ResponseEntity<JSONObject> thingsBoardUserAuthResponseEntity = restTemplate.postForEntity(authUrl, userEntity, JSONObject.class);
+        Assertions.assertNotNull(thingsBoardUserAuthResponseEntity.getBody());
+    }
 }
