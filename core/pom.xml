@@ -10,8 +10,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>core</artifactId>
-    <dependencies>
+    <repositories>
+        <repository>
+            <id>thingsboard</id>
+            <url>https://repo.thingsboard.io/artifactory/libs-release-public</url>
+        </repository>
+    </repositories>
 
+    <dependencies>
+        <!--thingsboard 客户端-->
+        <dependency>
+            <groupId>org.thingsboard</groupId>
+            <artifactId>rest-client</artifactId>
+            <version>3.4.1</version>
+        </dependency>
     </dependencies>
 
     <properties>
